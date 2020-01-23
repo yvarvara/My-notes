@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">My Notes</string>
+
+    <string name="note_title">Title</string>
+    <string name="note_body">Body</string>
+    <string name="note_tags">Tag</string>
+
+    <string name="delete_option">Delete</string>
+    <string name="sort_by_date">Sort by date</string>
+    <string name="sort_by_title">Sort by title</string>
+
+    <string name="date_modified">Last modified: %1$s</string>
+</resources>

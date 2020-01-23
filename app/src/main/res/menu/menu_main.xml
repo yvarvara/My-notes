@@ -1,0 +1,13 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.example.mynotes.MainActivity">
+    <item
+        android:id="@+id/sort_by_date"
+        android:title="@string/sort_by_date"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/sort_by_title"
+        android:title="@string/sort_by_title"
+        app:showAsAction="never" />
+</menu>
