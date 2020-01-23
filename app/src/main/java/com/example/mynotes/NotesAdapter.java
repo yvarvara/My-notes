@@ -31,6 +31,8 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     private List<Tag> tags = new ArrayList<>();
     private List<TagNote> tagNotes = new ArrayList<>();
 
+    private SortingType sortingType;
+
     private Context context;
     private OnListItemClickListener onListItemClickListener;
     private SimpleDateFormat sdf = new SimpleDateFormat("dd MMM yyyy HH:mm", Locale.ENGLISH);
@@ -115,6 +117,7 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
 
     void setNotes(List<Note> notes) {
         this.notes = notes;
+        sort(sortingType);
         notifyDataSetChanged();
     }
 
@@ -127,6 +130,11 @@ public class NotesAdapter extends RecyclerView.Adapter<NotesAdapter.NoteViewHold
     void setTagNotes(List<TagNote> tagNotes) {
         this.tagNotes = tagNotes;
         notifyDataSetChanged();
+    }
+
+    void setSortingType(SortingType sortingType) {
+        this.sortingType = sortingType;
+        sort(sortingType);
     }
 
     void sort(final SortingType sortingType) {

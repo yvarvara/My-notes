@@ -8,13 +8,10 @@ import android.os.Bundle;
 import com.example.mynotes.Models.Note;
 import com.example.mynotes.Models.Tag;
 import com.example.mynotes.Models.TagNote;
-import com.example.mynotes.Repositories.TagRepository;
-import com.example.mynotes.ViewModels.EditorViewModel;
 import com.example.mynotes.ViewModels.MainViewModel;
 import com.google.android.material.chip.Chip;
 import com.google.android.material.chip.ChipGroup;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
-import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,12 +26,9 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.PopupMenu;
-import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Observable;
 
 public class MainActivity extends AppCompatActivity implements NotesAdapter.OnListItemClickListener {
 
@@ -66,7 +60,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnLi
             @Override
             public void onChanged(List<Note> notes) {
                 if (notes != null)
-                    viewModel.setAllNotes();
+                    viewModel.setFilteredNotesToAll();
             }
         });
 
@@ -102,6 +96,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnLi
             recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL ));
 
         recyclerView.setAdapter(notesAdapter);
+        notesAdapter.setSortingType(viewModel.getSortingType());
 
         filterChipGroup = findViewById(R.id.filterChipGroup);
         for (String tagTitle : viewModel.filterTags) {
@@ -119,10 +114,12 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.sort_by_date:
-                notesAdapter.sort(SortingType.DATE);
+                viewModel.setSortingType(SortingType.DATE);
+                notesAdapter.setSortingType(SortingType.DATE);
                 break;
             case R.id.sort_by_title:
-                notesAdapter.sort(SortingType.TITLE);
+                viewModel.setSortingType(SortingType.TITLE);
+                notesAdapter.setSortingType(SortingType.TITLE);
                 break;
         }
         return true;
@@ -176,7 +173,7 @@ public class MainActivity extends AppCompatActivity implements NotesAdapter.OnLi
             public void onClick(View view) {
                 filterChipGroup.removeView(view);
                 viewModel.removeFilterTag(((Chip) view).getText().toString());
-                viewModel.setAllNotes();
+                viewModel.setFilteredNotesToAll();
             }
         });
 

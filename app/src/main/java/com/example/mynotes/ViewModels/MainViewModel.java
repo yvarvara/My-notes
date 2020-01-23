@@ -14,6 +14,7 @@ import com.example.mynotes.Models.TagNote;
 import com.example.mynotes.Repositories.NoteRepository;
 import com.example.mynotes.Repositories.TagNoteRepository;
 import com.example.mynotes.Repositories.TagRepository;
+import com.example.mynotes.SortingType;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,6 +30,7 @@ public class MainViewModel extends AndroidViewModel {
     private MutableLiveData<List<Note>> filteredNotes = new MutableLiveData<>();
 
     public List<String> filterTags = new ArrayList<>();
+    private SortingType sortingType;
 
     public MainViewModel(@NonNull Application application) {
         super(application);
@@ -40,6 +42,7 @@ public class MainViewModel extends AndroidViewModel {
         tags = tagRepository.getAllTags();
         tagNotes = tagNoteRepository.getAllTagNotes();
         notes = noteRepository.getAllNotes();
+        sortingType = SortingType.DATE;
     }
 
     public LiveData<List<Note>> getAllNotes() {
@@ -116,8 +119,16 @@ public class MainViewModel extends AndroidViewModel {
         filteredNotes.setValue(newFilteredNotes);
     }
 
-    public void setAllNotes() {
+    public void setFilteredNotesToAll() {
         filteredNotes.setValue(notes.getValue());
         displayNotesByTags();
+    }
+
+    public void setSortingType(SortingType sortingType) {
+        this.sortingType = sortingType;
+    }
+
+    public SortingType getSortingType() {
+        return this.sortingType;
     }
 }
